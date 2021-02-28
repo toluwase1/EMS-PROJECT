@@ -27,7 +27,12 @@ public class SalaryServiceImpl implements SalaryService {
 
     @Override
     public void saveEmployeeSalary(Long id, Salary salary) {
-
+        Employee employee = employeeService.getEmployeeById(id);
+        Salary newSalary = new Salary();
+        newSalary.setAmount(salary.getAmount());
+        newSalary.setMonth(salary.getMonth());
+        newSalary.setEmployee(employee);
+        salaryRepository.save(newSalary);
     }
 
     @Override

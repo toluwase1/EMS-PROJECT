@@ -6,13 +6,14 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 @Setter
 @Getter
 public class Salary extends BaseModel{
-    private Date date;
+    private LocalDateTime date;
     private Long amount;
     private String month;
 

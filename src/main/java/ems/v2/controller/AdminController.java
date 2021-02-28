@@ -186,8 +186,8 @@ public class AdminController {
 ////
     @PostMapping("/save-salary/{id}")
     public String saveEmployeeSalary(@ModelAttribute("salary") Salary salary, @PathVariable (value = "id") long id, HttpSession session){
-        salaryService.saveSalary(id, salary);
-        return "redirect:/employee";
+        salaryService.saveEmployeeSalary(id, salary);
+        return "redirect:/dashboard";
     }
 
     @GetMapping("/daily-attendance")
