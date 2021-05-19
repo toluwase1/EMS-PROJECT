@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface EmployeeLeaveService {
     List<EmployeeLeave> getEmployeeLeaves(Long id);
     String addNewLeave(Employee employee);

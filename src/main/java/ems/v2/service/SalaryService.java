@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+
 public interface SalaryService {
     List<Salary> getSalaries(Long id);
     void saveEmployeeSalary(Long id, Salary salary);

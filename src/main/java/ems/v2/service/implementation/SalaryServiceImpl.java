@@ -6,9 +6,11 @@ import ems.v2.repository.SalaryRepository;
 import ems.v2.service.EmployeeService;
 import ems.v2.service.SalaryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class SalaryServiceImpl implements SalaryService {
     EmployeeService employeeService;
     SalaryRepository salaryRepository;

@@ -6,6 +6,7 @@ import ems.v2.repository.AttendanceRepository;
 import ems.v2.repository.EmployeeRepository;
 import ems.v2.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@Service
 public class AttendanceServiceImpl implements AttendanceService {
     AttendanceRepository attendanceRepository;
     EmployeeRepository employeeRepository;
@@ -43,7 +45,10 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     public Map<String, String> addAttendance(Employee employee) {
+        System.out.println("Begin from here");
         Map<String, String> response = new HashMap<>();
+
+        System.out.println("Begin from here");
 
         LocalDateTime localDateTime = LocalDateTime.now();
         String date = localDateTime.toString().split("T")[0];
@@ -56,12 +61,16 @@ public class AttendanceServiceImpl implements AttendanceService {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
         LocalDateTime localStartDate = LocalDateTime.parse(newStartDate, dateTimeFormatter);
         LocalDateTime localEndDate = LocalDateTime.parse(newEndDate, dateTimeFormatter);
+        System.out.println("I reached here");
 
         if (localDateTime.isBefore(localStartDate)){
+            System.out.println("Is it here");
             response.put("beforeTime", "Too early to mark attendance");
         }else if (localDateTime.isAfter(localEndDate)){
+            System.out.println("Did I enter here");
             response.put("afterTime", "Too late to mark attendance");
         }else{
+            System.out.println("Or here");
             Optional<Attendance> employeeAttendance = attendanceRepository.findByEmployeeAndDateIsBetween(employee, localStartDate, localEndDate);
             if (employeeAttendance.isEmpty()) {
                 Optional<Employee> employeedb = employeeRepository.findById(employee.getId());
@@ -75,6 +84,7 @@ public class AttendanceServiceImpl implements AttendanceService {
                     response.put("notFound", "Employee does not exists");
                 }
             }else{
+                System.out.println(employeeAttendance.get().getEmployee().getFirstName());
                 response.put("alreadyMarked", "Attendance already marked");
             }
         }
@@ -98,7 +108,9 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public List<Attendance> getAttendanceByEmployeeId(Employee employee) {
-        return attendanceRepository.findAllByEmployee(employee);
+    public List<Attendance> getAttendanceByEmployeeId(Long id) {
+//        return attendanceRepository.findAllByDateBetween();
+        return attendanceRepository.findByEmployeeId(id);
+//        return attendanceRepository.findAllByEmployee(employee);
     }
 }

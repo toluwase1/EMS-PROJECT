@@ -5,7 +5,6 @@ import ems.v2.model.Employee;
 import org.springframework.stereotype.Service;
 //import ems.v2.model.At;
 
-@Service
 public interface AdminService {
     Admin getAdminByEmail (String email);
     Admin login (String email, String password);

@@ -7,10 +7,12 @@ import ems.v2.repository.EmployeeRepository;
 import ems.v2.service.EmployeeLeaveService;
 import ems.v2.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class EmployeeLeaveServiceImpl implements EmployeeLeaveService {
     private EmployeeLeaveRepository employeeLeaveRepository;
     private EmployeeRepository employeeRepository;

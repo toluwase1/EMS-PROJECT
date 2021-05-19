@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface EmployeeService {
     Employee login (String email, String password);
     List<Employee> findAllEmployees();

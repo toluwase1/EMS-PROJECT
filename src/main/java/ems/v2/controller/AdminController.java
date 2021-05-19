@@ -16,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Controller
 public class AdminController {
@@ -25,11 +24,14 @@ public class AdminController {
     private AttendanceService attendanceService;
     private EmployeeLeaveService employeeLeaveService;
     private SalaryService salaryService;
+
     @Autowired
-    public AdminController(AdminService adminService, EmployeeService employeeService) {
+    public AdminController(AdminService adminService, EmployeeService employeeService, AttendanceService attendanceService, EmployeeLeaveService employeeLeaveService, SalaryService salaryService) {
         this.adminService = adminService;
         this.employeeService=employeeService;
-
+        this.attendanceService = attendanceService;
+        this.employeeLeaveService = employeeLeaveService;
+        this.salaryService = salaryService;
     }
 
     @GetMapping("/dashboard")
@@ -101,7 +103,7 @@ public class AdminController {
 
         // call delete employee method
         Employee employee = employeeService.getEmployeeById(id);
-        model.addAttribute("attendanceList", attendanceService.getAttendanceByEmployeeId(employee));
+        model.addAttribute("attendanceList", employee.getAttendance());
         model.addAttribute("employee", employee);
         return "view-employee-page";
     }
@@ -127,7 +129,7 @@ public class AdminController {
         Employee employee = employeeService.getEmployeeById(id);
         model.addAttribute("leaveList", employeeLeaveService.getEmployeeLeaves(id));
         model.addAttribute("employee", employee);
-        return "view-employee-page";
+        return "employee-leave";
     }
 
 
@@ -144,6 +146,8 @@ public class AdminController {
     @PostMapping("/mark-attendance")
     public String markAttendance(HttpSession session, RedirectAttributes redirectAttributes){
         Employee employee = (Employee) session.getAttribute("employee");
+        System.out.println(employee.getEmail());
+        System.out.println("I started here");
         Map<String, String> response = attendanceService.addAttendance(employee);
         if (response.containsKey("alreadyMarked")){
             redirectAttributes.addFlashAttribute("marked", response.get("alreadyMarked"));
@@ -195,10 +199,16 @@ public class AdminController {
         Object adminObject = session.getAttribute("admin");
         if (adminObject == null) return "redirect:/auth/login";
 
-        List<Attendance> listAttendance = attendanceService.findAllAttendance();
-        List<Employee> listEmployeeAttendance = listAttendance.stream().map(Attendance::getEmployee).collect(Collectors.toList());
-        model.addAttribute("listEmployeesAttendance", listEmployeeAttendance);
-        return "view-daily-attendance";
+//        System.out.println(adminObject.toString());
+
+        List<Attendance> attendanceList = attendanceService.findAllAttendance();
+        System.out.println("I am here");
+//        System.out.println(attendanceService.getAttendanceByEmployeeId(1L));
+//        List<Attendance> listAttendance = attendanceService.findAllAttendance();
+//        System.out.println(listAttendance.get(0).getEmployee().getFirstName());
+//        List<Employee> listEmployeeAttendance = listAttendance.stream().map(Attendance::getEmployee).collect(Collectors.toList());
+        model.addAttribute("attendanceList", attendanceList);
+        return "employee-attendance";
     }
 
 

@@ -3,10 +3,7 @@ package ems.v2.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Getter
@@ -15,6 +12,8 @@ import java.util.List;
 public class Employee extends BaseModel {
     private String firstName;
     private String lastName;
+
+    @Column(unique = true)
     private String email;
     private String password;
     private String phoneNumber;

@@ -12,7 +12,10 @@ import java.util.Optional;
 @Repository
 public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
    // Optional<Attendance> findByEmployeeAndTimeAppliedIsBetween(Employee employee, LocalDateTime createdAt, LocalDateTime updatedAt);
-    List<Attendance> findAllByDateBetween(LocalDateTime createdAt, LocalDateTime updatedAt);
-    List<Attendance> findAllByEmployee(Employee employee);
+//    List<Attendance> findAllByDateBetween(LocalDateTime createdAt, LocalDateTime updatedAt);
+   List<Attendance> findAllByDateBetween(LocalDateTime createdAt, LocalDateTime updatedAt);
+
+    List<Attendance> findByEmployeeId(Long id);
+//    List<Attendance> findAllByEmployee(Employee employee);
     Optional<Attendance> findByEmployeeAndDateIsBetween(Employee employee, LocalDateTime createdAt, LocalDateTime updatedAt);
 }
